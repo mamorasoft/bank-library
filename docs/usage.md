@@ -75,7 +75,7 @@ const amount = ref(0);
 
 ### 4. API Request Wrapper (`callApi`)
 Fungsi helper untuk melakukan HTTP requests menggunakan **Axios**. Fungsi ini otomatis:
-1. Menyuntikkan token otentikasi Bearer jika ada `'auth_key'` di `localStorage`.
+1. Menyuntikkan token otentikasi Bearer jika ada `'token'` di `localStorage`.
 2. Mendeteksi jika terdapat data ber-tipe `File` atau `Blob` dalam object payload, lalu mengonversinya ke `FormData` (untuk upload file).
 
 ```vue

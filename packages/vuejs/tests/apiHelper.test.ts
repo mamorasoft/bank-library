@@ -37,7 +37,7 @@ describe('callApi', () => {
     vi.mocked(axios).mockResolvedValueOnce({ data: { authorized: true } });
     
     // Set mock token in localStorage
-    localStorage.setItem('auth_key', 'my-super-secret-token');
+    localStorage.setItem('token', 'my-super-secret-token');
 
     await callApi('GET', '/api/user');
 
