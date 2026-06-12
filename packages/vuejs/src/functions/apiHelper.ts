@@ -16,7 +16,7 @@ export async function callApi(
   data: any = null,
   params: any = null
 ): Promise<AxiosResponse> {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('auth_key') : null;
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   let body = data;
   let isFile = false;
