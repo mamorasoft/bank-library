@@ -236,6 +236,24 @@ console.log(parseRupiah('Rp. 250.000,50')); // 250000.5
 console.log(parseRupiah('100.000')); // 100000
 ```
 
+### API Helper Functions
+
+```javascript
+import { callApi } from '@bank-library/vuejs';
+
+// GET request with query params
+const users = await callApi('GET', '/api/users', null, { page: 1 });
+
+// POST JSON payload
+const resJson = await callApi('POST', '/api/users', { name: 'John Doe' });
+
+// POST with File/Blob (auto-converts to FormData)
+const resUpload = await callApi('POST', '/api/upload', {
+  name: 'image.png',
+  file: imageFile // File or Blob object
+});
+```
+
 ### Composition API - useRupiah
 
 For a more reactive approach, use the `useRupiah` composable:

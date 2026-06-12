@@ -2,6 +2,11 @@
 
 A comprehensive banking utilities library for multiple platforms including Laravel, Vue.js, and Flutter.
 
+## Dokumentasi Penggunaan
+
+Untuk panduan instalasi dan penggunaan cepat, silakan merujuk ke:
+📖 **[Panduan Penggunaan Singkat (Quick Start Guide)](./docs/usage.md)**
+
 ## Structure
 
 ```
