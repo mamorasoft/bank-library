@@ -1,0 +1,28 @@
+{
+  "name": "bank-library-monorepo",
+  "version": "1.0.0",
+  "description": "Bank Library Monorepo - Banking utilities for multiple platforms",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/bank-library"
+  },
+  "keywords": [
+    "banking",
+    "finance",
+    "monorepo",
+    "laravel",
+    "vue",
+    "flutter"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
