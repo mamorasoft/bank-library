@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { callApi } from '../src/functions/apiHelper';
+import { callApi } from '../src/api/apiHelper';
 import axios from 'axios';
 
 // Mock axios

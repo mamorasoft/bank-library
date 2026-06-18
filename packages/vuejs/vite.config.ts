@@ -7,25 +7,25 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'BankLibraryVuejs',
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'umd.cjs'}`,
-      formats: ['es', 'umd']
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        functions: resolve(__dirname, 'src/functions/index.ts'),
+        ui: resolve(__dirname, 'src/ui/index.ts'),
+        api: resolve(__dirname, 'src/api/index.ts')
+      },
+      formats: ['es', 'cjs'],
+      fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'js' : 'cjs'}`
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'axios'],
       output: {
-        exports: 'named',
-        globals: {
-          vue: 'Vue'
-        }
+        exports: 'named'
       }
     }
   },
   plugins: [
     vue(),
     dts({
-      insertTypesEntry: true,
       cleanVueFileName: true
     })
   ],

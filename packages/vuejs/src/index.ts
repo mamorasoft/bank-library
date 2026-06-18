@@ -7,6 +7,7 @@ import { IndonesianDate } from './functions/indonesianDate';
 
 export * from './ui';
 export * from './functions';
+export * from './api';
 
 export default {
   install(app: App, globalOptions?: FormatOptions) {

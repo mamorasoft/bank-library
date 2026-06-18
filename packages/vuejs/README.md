@@ -283,6 +283,23 @@ const addBonus = () => {
 </template>
 ```
 
+## Subpath Imports (Tree-Shaking)
+
+Selain root `@bank-library/vuejs` (yang re-export semua fitur untuk backward compatibility), package ini juga menyediakan subpath import per domain. Pakai ini jika hanya butuh sebagian fitur agar dependency seperti `axios` (dipakai oleh `callApi`) atau kode komponen UI tidak ikut masuk ke bundle produksi aplikasi Anda:
+
+```javascript
+// Hanya butuh function (validator, formatter, currency, date) — tanpa axios & tanpa UI
+import { formatRupiah, validateAccountNumber } from '@bank-library/vuejs/functions';
+
+// Hanya butuh komponen UI Vue
+import { BankAccountInput, CurrencyInput } from '@bank-library/vuejs/ui';
+
+// Hanya butuh callApi (satu-satunya yang membutuhkan axios)
+import { callApi } from '@bank-library/vuejs/api';
+```
+
+> Catatan: `axios` tetap tercatat sebagai dependency di `package.json` dan akan tetap terdownload saat `npm install`, terlepas dari subpath mana yang dipakai. Subpath import ini hanya memengaruhi *bundle size* hasil build aplikasi Anda (lewat tree-shaking), bukan ukuran `node_modules`.
+
 ## Rupiah Format Configuration
 
 | Option | Type | Default | Description |
