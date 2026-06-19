@@ -1,10 +1,12 @@
 {
-  "name": "bank-library-monorepo",
+  "name": "@bank-library-mamorasoft",
   "version": "1.0.0",
   "description": "Bank Library Monorepo - Banking utilities for multiple platforms",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/laravel",
+    "packages/vuejs",
+    "packages/flutter"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
