@@ -1,5 +1,5 @@
 {
-  "name": "@bank-library-mamorasoft",
+  "name": "@mamorasoft/bank-library",
   "version": "1.0.0",
   "description": "Bank Library Monorepo - Banking utilities for multiple platforms",
   "private": true,

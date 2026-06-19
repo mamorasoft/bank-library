@@ -50,10 +50,10 @@ Banking components and utilities for Vue.js 3 applications.
 npm install @bank-library/vuejs
 ```
 
-Jika belum di-publish ke registry, install langsung dari repo git ini — gunakan selector `#path:` agar npm hanya resolve `package.json` di `packages/vuejs`, bukan root monorepo (butuh npm ≥ 9):
-```bash
-npm install git+https://github.com/mamorasoft/bank-library.git#path:packages/vuejs
-```
+> **Catatan**: npm tidak punya cara native untuk install hanya satu subfolder dari git repo monorepo.
+> `npm install git+https://...` akan selalu men-clone seluruh repo dan memakai `package.json` di
+> root (bukan `packages/vuejs`). Jadi cara yang didukung untuk memakai `@bank-library/vuejs` adalah
+> install dari registry seperti contoh di atas.
 
 **Features:**
 - BankAccountInput component
