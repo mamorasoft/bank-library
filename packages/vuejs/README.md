@@ -241,18 +241,32 @@ console.log(parseRupiah('100.000')); // 100000
 ```javascript
 import { callApi } from '@bank-library/vuejs';
 
-// GET request with query params
-const users = await callApi('GET', '/api/users', null, { page: 1 });
+// GET request with query params (method default = 'GET')
+const users = await callApi({ url: '/api/users', params: { page: 1 } });
 
 // POST JSON payload
-const resJson = await callApi('POST', '/api/users', { name: 'John Doe' });
+const resJson = await callApi({ method: 'POST', url: '/api/users', data: { name: 'John Doe' } });
 
 // POST with File/Blob (auto-converts to FormData)
-const resUpload = await callApi('POST', '/api/upload', {
-  name: 'image.png',
-  file: imageFile // File or Blob object
+const resUpload = await callApi({
+  method: 'POST',
+  url: '/api/upload',
+  data: {
+    name: 'image.png',
+    file: imageFile // File or Blob object
+  }
 });
+
+// Membatalkan request yang sedang berjalan
+const request = callApi({ url: '/api/users' });
+request.abort();
+
+// Atau pakai AbortSignal sendiri (misal AbortSignal.timeout)
+await callApi({ url: '/api/users', signal: AbortSignal.timeout(5000) });
 ```
+
+`callApi` dibangun di atas `fetch` bawaan browser (tidak ada dependency eksternal). Promise yang
+dikembalikan punya tambahan method `abort()` untuk membatalkan request.
 
 ### Composition API - useRupiah
 
@@ -285,20 +299,20 @@ const addBonus = () => {
 
 ## Subpath Imports (Tree-Shaking)
 
-Selain root `@bank-library/vuejs` (yang re-export semua fitur untuk backward compatibility), package ini juga menyediakan subpath import per domain. Pakai ini jika hanya butuh sebagian fitur agar dependency seperti `axios` (dipakai oleh `callApi`) atau kode komponen UI tidak ikut masuk ke bundle produksi aplikasi Anda:
+Selain root `@bank-library/vuejs` (yang re-export semua fitur untuk backward compatibility), package ini juga menyediakan subpath import per domain. Pakai ini jika hanya butuh sebagian fitur agar kode komponen UI atau `callApi` tidak ikut masuk ke bundle produksi aplikasi Anda:
 
 ```javascript
-// Hanya butuh function (validator, formatter, currency, date) — tanpa axios & tanpa UI
+// Hanya butuh function (validator, formatter, currency, date) — tanpa UI
 import { formatRupiah, validateAccountNumber } from '@bank-library/vuejs/functions';
 
 // Hanya butuh komponen UI Vue
 import { BankAccountInput, CurrencyInput } from '@bank-library/vuejs/ui';
 
-// Hanya butuh callApi (satu-satunya yang membutuhkan axios)
+// Hanya butuh callApi
 import { callApi } from '@bank-library/vuejs/api';
 ```
 
-> Catatan: `axios` tetap tercatat sebagai dependency di `package.json` dan akan tetap terdownload saat `npm install`, terlepas dari subpath mana yang dipakai. Subpath import ini hanya memengaruhi *bundle size* hasil build aplikasi Anda (lewat tree-shaking), bukan ukuran `node_modules`.
+`callApi` menggunakan `fetch` bawaan browser — tidak ada dependency eksternal yang ikut terdownload.
 
 ## Rupiah Format Configuration
 
