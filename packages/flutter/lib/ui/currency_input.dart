@@ -13,6 +13,10 @@ class CurrencyInput extends StatefulWidget {
   final String convertedCurrency;
   final double conversionRate;
   final ValueChanged<double>? onChanged;
+  final InputDecoration? decoration;
+  final TextStyle? style;
+  final TextStyle? labelStyle;
+  final TextStyle? convertedAmountStyle;
 
   const CurrencyInput({
     Key? key,
@@ -26,6 +30,10 @@ class CurrencyInput extends StatefulWidget {
     this.convertedCurrency = 'EUR',
     this.conversionRate = 1.0,
     this.onChanged,
+    this.decoration,
+    this.style,
+    this.labelStyle,
+    this.convertedAmountStyle,
   }) : super(key: key);
 
   @override
@@ -86,6 +94,47 @@ class _CurrencyInputState extends State<CurrencyInput> {
       widget.locale,
     );
 
+    final defaultLabelStyle = const TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    ).merge(widget.labelStyle);
+
+    final defaultConvertedAmountStyle = TextStyle(
+      fontSize: 12,
+      color: Colors.grey[600],
+    ).merge(widget.convertedAmountStyle);
+
+    final defaultDecoration = InputDecoration(
+      hintText: widget.placeholder,
+      prefixText: '$_currencySymbol ',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+    final effectiveDecoration = widget.decoration != null
+        ? defaultDecoration.copyWith(
+            icon: widget.decoration!.icon,
+            labelText: widget.decoration!.labelText,
+            labelStyle: widget.decoration!.labelStyle,
+            helperText: widget.decoration!.helperText,
+            helperStyle: widget.decoration!.helperStyle,
+            hintText: widget.decoration!.hintText ?? defaultDecoration.hintText,
+            hintStyle: widget.decoration!.hintStyle,
+            errorText: widget.decoration!.errorText,
+            errorStyle: widget.decoration!.errorStyle,
+            prefixIcon: widget.decoration!.prefixIcon,
+            prefix: widget.decoration!.prefix,
+            prefixText: widget.decoration!.prefixText ?? defaultDecoration.prefixText,
+            suffixIcon: widget.decoration!.suffixIcon,
+            suffix: widget.decoration!.suffix,
+            suffixText: widget.decoration!.suffixText,
+            border: widget.decoration!.border ?? defaultDecoration.border,
+            fillColor: widget.decoration!.fillColor,
+            filled: widget.decoration!.filled,
+            contentPadding: widget.decoration!.contentPadding,
+          )
+        : defaultDecoration;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,10 +145,7 @@ class _CurrencyInputState extends State<CurrencyInput> {
               children: [
                 Text(
                   widget.label!,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
+                  style: defaultLabelStyle,
                 ),
                 if (widget.required)
                   const Text(
@@ -111,13 +157,8 @@ class _CurrencyInputState extends State<CurrencyInput> {
           ),
         TextField(
           controller: _controller,
-          decoration: InputDecoration(
-            hintText: widget.placeholder,
-            prefixText: '$_currencySymbol ',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
+          style: widget.style,
+          decoration: effectiveDecoration,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
@@ -128,10 +169,7 @@ class _CurrencyInputState extends State<CurrencyInput> {
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
               '≈ $formattedConverted',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
+              style: defaultConvertedAmountStyle,
             ),
           ),
       ],

@@ -1,24 +1,25 @@
 <template>
-  <div class="currency-input">
-    <label v-if="label" :for="inputId" class="currency-label">
+  <div class="currency-input" :class="wrapperClass">
+    <label v-if="label" :for="inputId" class="currency-label" :class="labelClass">
       {{ label }}
       <span v-if="required" class="required">*</span>
     </label>
     <div class="input-wrapper">
-      <span class="currency-symbol">{{ currencySymbol }}</span>
+      <span class="currency-symbol" :class="currencySymbolClass">{{ currencySymbol }}</span>
       <input
         :id="inputId"
         v-model="displayValue"
         type="text"
         :placeholder="placeholder"
         :disabled="disabled"
+        v-bind="$attrs"
+        class="currency-field"
         @input="handleInput"
         @blur="handleBlur"
         @focus="handleFocus"
-        class="currency-field"
       />
     </div>
-    <div v-if="showConverted && convertedAmount !== null" class="converted-amount">
+    <div v-if="showConverted && convertedAmount !== null" class="converted-amount" :class="convertedAmountClass">
       ≈ {{ formattedConvertedAmount }}
     </div>
   </div>
@@ -27,6 +28,10 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { formatCurrency } from '../functions/currencyConverter';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 interface Props {
   modelValue?: number;
@@ -39,6 +44,10 @@ interface Props {
   showConverted?: boolean;
   convertedCurrency?: string;
   conversionRate?: number;
+  wrapperClass?: string | Record<string, boolean> | Array<unknown>;
+  labelClass?: string | Record<string, boolean> | Array<unknown>;
+  currencySymbolClass?: string | Record<string, boolean> | Array<unknown>;
+  convertedAmountClass?: string | Record<string, boolean> | Array<unknown>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -105,20 +114,7 @@ function handleBlur() {
 </script>
 
 <style scoped>
-.currency-input {
-  margin-bottom: 1rem;
-}
-
-.currency-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.required {
-  color: #ef4444;
-}
-
+/* Struktural saja — tidak ada warna/border/spacing dekoratif, komponen unstyled by default */
 .input-wrapper {
   position: relative;
   display: flex;
@@ -128,33 +124,5 @@ function handleBlur() {
 .currency-symbol {
   position: absolute;
   left: 0.75rem;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.currency-field {
-  width: 100%;
-  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-.currency-field:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.currency-field:disabled {
-  background-color: #f3f4f6;
-  cursor: not-allowed;
-}
-
-.converted-amount {
-  margin-top: 0.25rem;
-  font-size: 0.875rem;
-  color: #6b7280;
 }
 </style>

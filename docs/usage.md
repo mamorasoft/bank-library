@@ -73,6 +73,24 @@ const amount = ref(0);
 </template>
 ```
 
+> **Catatan styling**: `BankAccountInput`, `CurrencyInput`, dan `RupiahInput` **unstyled
+> by default** — tidak ada warna/border/padding bawaan. `class`/`style` yang dikirim ke
+> komponen otomatis jatuh ke elemen `<input>`, dan tersedia props tambahan
+> (`wrapperClass`, `labelClass`, `errorClass`, dll) untuk styling bagian lain:
+>
+> ```vue
+> <BankAccountInput
+>   v-model="accountNumber"
+>   label="No. Rekening"
+>   class="border rounded px-3 py-2"
+>   wrapper-class="mb-4"
+>   label-class="font-medium text-gray-700"
+>   error-class="text-red-500 text-sm"
+> />
+> ```
+>
+> Lihat `docs/API.md` untuk daftar lengkap props styling per komponen.
+
 ### 4. API Request Wrapper (`callApi`)
 Fungsi helper untuk melakukan HTTP requests menggunakan **Axios**. Fungsi ini otomatis:
 1. Menyuntikkan token otentikasi Bearer jika ada `'token'` di `localStorage`.
@@ -130,7 +148,25 @@ CurrencyInput(
   locale: 'id_ID',
   onChanged: (val) => print(val),
 )
+
+// Override decoration & style tanpa kehilangan behavior default
+// (hintText/suffixIcon/errorText bawaan tetap berfungsi)
+BankAccountInput(
+  label: 'No. Rekening',
+  decoration: InputDecoration(
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+    fillColor: Colors.grey[100],
+    filled: true,
+  ),
+  style: const TextStyle(fontSize: 16),
+  labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+)
 ```
+
+> **Catatan styling**: `decoration`/`style`/`labelStyle` di-merge dengan default
+> internal via `InputDecoration.copyWith()`/`TextStyle.merge()` — cukup isi field yang
+> ingin diubah, field lain (seperti `hintText` atau ikon validasi) tetap berfungsi
+> seperti default.
 
 ### 3. Fungsi Utilitas
 ```dart

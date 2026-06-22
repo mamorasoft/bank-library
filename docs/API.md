@@ -228,6 +228,9 @@ const amount = parseCurrency('$1,234.56'); // 1234.56
 
 A validated input component/widget for bank account numbers.
 
+> **Note (Vue.js):** this component is **unstyled by default** — no colors, borders,
+> or spacing are applied out of the box. Style it entirely with your own CSS/classes.
+
 **Vue.js Component:**
 ```vue
 <BankAccountInput
@@ -238,6 +241,11 @@ A validated input component/widget for bank account numbers.
   :show-validation="true"
   error-message="Invalid account number"
   bank-code="BCA"
+  class="my-input-style"
+  wrapper-class="my-wrapper-style"
+  label-class="my-label-style"
+  error-class="my-error-style"
+  validation-icon-class="my-icon-style"
   @validate="handleValidation"
 />
 ```
@@ -252,6 +260,11 @@ BankAccountInput(
   showValidation: true,
   errorMessage: 'Invalid account number',
   bankCode: 'BCA',
+  decoration: InputDecoration(
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+  ),
+  style: const TextStyle(fontSize: 16),
+  labelStyle: const TextStyle(fontWeight: FontWeight.bold),
   onChanged: (value) => print(value),
   onValidate: (isValid) => print(isValid),
 )
@@ -264,12 +277,24 @@ BankAccountInput(
 - `showValidation`: Show validation icon/indicator
 - `errorMessage`: Custom error message
 - `bankCode`: Bank code for validation
+- `class` / `style` *(Vue, native attrs)*: forwarded directly to the `<input>` element
+- `wrapperClass`, `labelClass`, `errorClass`, `validationIconClass` *(Vue)*: extra
+  classes applied to the wrapper `<div>`, `<label>`, error message, and validation
+  icon respectively
+- `decoration` *(Flutter, `InputDecoration?`)*: merged on top of the default
+  decoration via `copyWith()` — only the fields you set are overridden, the rest
+  (hint text, validation suffix icon, error text) keep their default behavior
+- `style`, `labelStyle`, `errorStyle` *(Flutter, `TextStyle?`)*: merged with default
+  text styles via `TextStyle.merge()`
 
 ---
 
 ### CurrencyInput
 
 A formatted input component/widget for currency amounts.
+
+> **Note (Vue.js):** this component is **unstyled by default** — style it entirely
+> with your own CSS/classes, see `BankAccountInput` above for the same pattern.
 
 **Vue.js Component:**
 ```vue
@@ -283,6 +308,11 @@ A formatted input component/widget for currency amounts.
   :show-converted="true"
   converted-currency="EUR"
   :conversion-rate="0.85"
+  class="my-input-style"
+  wrapper-class="my-wrapper-style"
+  label-class="my-label-style"
+  currency-symbol-class="my-symbol-style"
+  converted-amount-class="my-converted-style"
 />
 ```
 
@@ -298,6 +328,11 @@ CurrencyInput(
   showConverted: true,
   convertedCurrency: 'EUR',
   conversionRate: 0.85,
+  decoration: InputDecoration(
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+  ),
+  style: const TextStyle(fontSize: 16),
+  convertedAmountStyle: const TextStyle(fontSize: 14, color: Colors.blue),
   onChanged: (value) => print(value),
 )
 ```
@@ -311,6 +346,41 @@ CurrencyInput(
 - `showConverted`: Show converted amount
 - `convertedCurrency`: Target currency for conversion
 - `conversionRate`: Exchange rate
+- `class` / `style` *(Vue, native attrs)*: forwarded directly to the `<input>` element
+- `wrapperClass`, `labelClass`, `currencySymbolClass`, `convertedAmountClass` *(Vue)*:
+  extra classes applied to the wrapper, label, currency symbol, and converted amount
+  text respectively
+- `decoration` *(Flutter, `InputDecoration?`)*: merged on top of the default
+  decoration via `copyWith()`
+- `style`, `labelStyle`, `convertedAmountStyle` *(Flutter, `TextStyle?`)*: merged with
+  default text styles via `TextStyle.merge()`
+
+---
+
+### RupiahInput
+
+A Rupiah-formatted input component (Vue.js only), following the same override
+pattern as `BankAccountInput` and `CurrencyInput` above.
+
+> **Note:** unstyled by default — style it entirely with your own CSS/classes.
+
+**Vue.js Component:**
+```vue
+<RupiahInput
+  v-model="amount"
+  label="Jumlah"
+  error="Wajib diisi"
+  class="my-input-style"
+  wrapper-class="my-wrapper-style"
+  label-class="my-label-style"
+  error-class="my-error-style"
+/>
+```
+
+**Props/Parameters:**
+- `class` / `style` *(native attrs)*: forwarded directly to the `<input>` element
+- `wrapperClass`, `labelClass`, `errorClass`: extra classes applied to the wrapper
+  `<div>`, `<label>`, and error message respectively
 
 ---
 
