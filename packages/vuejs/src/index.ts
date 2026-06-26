@@ -4,13 +4,16 @@ import * as functions from './functions';
 import { vRupiah } from './functions/rupiahDirective';
 import { formatRupiah, parseRupiah, FormatOptions } from './functions/rupiahFormatter';
 import { IndonesianDate } from './functions/indonesianDate';
+import { responsiveColsTailwind, getDefaultCol, _setGlobalGridOptions, GridColOptions } from './functions/gridColumns';
 
 export * from './ui';
 export * from './functions';
 export * from './api';
 
+export interface BankLibraryOptions extends FormatOptions, GridColOptions {}
+
 export default {
-  install(app: App, globalOptions?: FormatOptions) {
+  install(app: App, globalOptions?: BankLibraryOptions) {
     // Register components
     Object.entries(components).forEach(([name, component]) => {
       if (name !== 'default') {
@@ -63,6 +66,13 @@ export default {
       date: Date | string | number | null | undefined,
       formatStr: string
     ): string => IndonesianDate.format(date, formatStr);
+
+    // Store global grid column options (read by getDefaultCol())
+    _setGlobalGridOptions({ defaultCol: globalOptions?.defaultCol });
+
+    // Register grid column helpers globally
+    app.config.globalProperties.$getDefaultCol = getDefaultCol;
+    app.config.globalProperties.$responsiveColsTailwind = responsiveColsTailwind;
   },
 };
 
@@ -74,6 +84,8 @@ declare module '@vue/runtime-core' {
     $indoMonth: (date?: Date | string | number | null, short?: boolean) => string;
     $indoDay: (date?: Date | string | number | null, short?: boolean) => string;
     $indoFormat: (date: Date | string | number | null | undefined, formatStr: string) => string;
+    $getDefaultCol: () => number | undefined;
+    $responsiveColsTailwind: (defaultCol: number, step: number, max: number) => string;
   }
 }
 
