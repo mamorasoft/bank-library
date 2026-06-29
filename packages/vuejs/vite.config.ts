@@ -17,7 +17,7 @@ export default defineConfig({
       fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'js' : 'cjs'}`
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'sweetalert2'],
       output: {
         exports: 'named'
       }

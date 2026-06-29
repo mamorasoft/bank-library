@@ -37,7 +37,7 @@ app.mount('#app');
 This will:
 - Register all components globally
 - Register the `v-rupiah` directive globally
-- Provide global helpers `$formatRupiah` and `$parseRupiah`
+- Provide global helpers `$formatRupiah`, `$parseRupiah`, `$indoDate`, `$indoMonth`, `$indoDay`, `$indoFormat`, `$getDefaultCol`, and `$responsiveColsTailwind`
 
 ### Component Registration
 
@@ -296,6 +296,222 @@ const addBonus = () => {
   </div>
 </template>
 ```
+
+### Responsive Tailwind Columns
+
+```javascript
+import { responsiveColsTailwind, getDefaultCol } from '@bank-library/vuejs';
+
+// Build a responsive col-span class string for Tailwind grids.
+// Starts at `defaultCol` for the base viewport, adds `step` columns at each
+// Tailwind breakpoint (sm, md, lg, xl, 2xl), capped at `max`.
+console.log(responsiveColsTailwind(1, 2, 8));
+// => "col-span-1 sm:col-span-3 md:col-span-5 lg:col-span-7 xl:col-span-8"
+
+console.log(responsiveColsTailwind(2, 1, 6));
+// => "col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6"
+
+// getDefaultCol() returns the value configured via app.use(BankLibrary, { defaultCol: N })
+console.log(getDefaultCol()); // undefined until app.use() is called with defaultCol
+```
+
+When registered via the Vue plugin, two helpers are exposed on every component instance:
+
+```vue
+<script setup>
+// component-internal: no import needed
+</script>
+
+<template>
+  <div :class="['grid grid-cols-12', $responsiveColsTailwind($getDefaultCol() ?? 1, 2, 12)]">
+    <!-- ... -->
+  </div>
+</template>
+```
+
+To set the default, pass it to `app.use()`:
+
+```javascript
+app.use(BankLibrary, { defaultCol: 2 });
+```
+
+Throws `RangeError` if `defaultCol < 1` or `max < defaultCol`. Non-positive `step` is treated as `1`.
+
+### SweetAlert Dialogs
+
+SweetAlert2-based helpers for common confirmation and notification flows. All helpers
+are SSR-safe — they no-op (or return a resolved dismissal result) when `window` is undefined,
+so they can be imported in Nuxt/SSR code without crashing.
+
+```javascript
+import {
+  confirmDelete,
+  confirmGenerate,
+  messageSuccess,
+  messageError,
+  dialogError
+} from '@bank-library/vuejs';
+```
+
+#### `confirmDelete(title, text, icon?)`
+
+Shows a destructive-action confirmation dialog. Returns a `Promise<SweetAlertResult>`;
+check `result.isConfirmed` to proceed with the delete.
+
+```javascript
+const result = await confirmDelete(
+  'Hapus data ini?',
+  'Data yang dihapus tidak dapat dikembalikan.'
+);
+if (result.isConfirmed) {
+  await api.deleteRecord(id);
+}
+```
+
+| Param  | Type             | Default     | Description                |
+| :----- | :--------------- | :---------- | :------------------------- |
+| title  | `string`         | required    | Dialog title.              |
+| text   | `string`         | required    | Dialog body text.          |
+| icon   | `SweetAlertIcon` | `'warning'` | SweetAlert icon name.      |
+
+Confirm button is red (`#d33`) with text `"Ya, hapus!"`, cancel button is blue (`#3085d6`)
+with text `"Batal"`.
+
+#### `confirmGenerate(title, text, icon?)`
+
+Shows a confirmation dialog for generate/regenerate actions. Same return shape as
+`confirmDelete`.
+
+```javascript
+const result = await confirmGenerate(
+  'Generate laporan baru?',
+  'Proses ini akan menimpa laporan yang ada.'
+);
+if (result.isConfirmed) {
+  await api.regenerateReport();
+}
+```
+
+| Param  | Type             | Default      | Description                |
+| :----- | :--------------- | :----------- | :------------------------- |
+| title  | `string`         | required     | Dialog title.              |
+| text   | `string`         | required     | Dialog body text.          |
+| icon   | `SweetAlertIcon` | `'question'` | SweetAlert icon name.      |
+
+Confirm button is blue (`#3085d6`) with text `"Ya, generate!"`, cancel button is red (`#d33`)
+with text `"Batal"`.
+
+#### `messageSuccess(icon?, message)`
+
+Shows a transient auto-closing dialog (no confirm button, 1.5s timer). Use for
+success notifications.
+
+```javascript
+await messageSuccess('success', 'Data berhasil disimpan.');
+```
+
+| Param    | Type             | Default     | Description            |
+| :------- | :--------------- | :---------- | :--------------------- |
+| icon     | `SweetAlertIcon` | `'success'` | SweetAlert icon name.  |
+| message  | `string`         | required    | Title text.            |
+
+#### `messageError(icon?, message)` — toast variant
+
+Shows a non-blocking toast in the top-right corner with a 3s timer and progress bar.
+The toast pauses its timer on mouse hover. Use for transient error feedback where
+you don't want to interrupt the user.
+
+```javascript
+messageError('error', 'Gagal menyimpan data, coba lagi.');
+```
+
+| Param    | Type             | Default   | Description            |
+| :------- | :--------------- | :-------- | :--------------------- |
+| icon     | `SweetAlertIcon` | `'error'` | SweetAlert icon name.  |
+| message  | `string`         | required  | Toast title text.      |
+
+#### `dialogError(message)`
+
+Shows a modal error dialog with title `"Oops..."` and the given message. Use when
+the user must acknowledge the error before continuing (e.g. blocking validation
+failures).
+
+```javascript
+dialogError('Tidak dapat terhubung ke server.');
+```
+
+| Param    | Type     | Default  | Description           |
+| :------- | :------- | :------- | :-------------------  |
+| message  | `string` | required | Body text of dialog.  |
+
+### Object Utilities
+
+Helpers for converting between arrays of objects and keyed objects.
+
+```javascript
+import { arrayToObject, objectToArray } from '@bank-library/vuejs';
+```
+
+#### `arrayToObject(arr, keyField)`
+
+Reduces an array of objects to an object keyed by `keyField`. Returns `{}` if `arr` is not an array.
+
+```javascript
+const users = [
+  { id: 1, name: 'Andi' },
+  { id: 2, name: 'Budi' }
+];
+arrayToObject(users, 'id');
+// => { 1: { id: 1, name: 'Andi' }, 2: { id: 2, name: 'Budi' } }
+```
+
+| Param      | Type            | Default   | Description                                  |
+| :--------- | :-------------- | :-------- | :------------------------------------------- |
+| arr        | `T[]`           | required  | Source array.                                |
+| keyField   | `keyof T`       | required  | Property of each item used as the object key. |
+
+#### `objectToArray(objArr, keyObj?)`
+
+Inverse of `arrayToObject`. Maps a keyed object back to an array, injecting the object key
+as a property (default `'id'`) on each item. Returns `[]` for null/non-object input.
+
+```javascript
+const byId = { 1: { name: 'Andi' }, 2: { name: 'Budi' } };
+objectToArray(byId);
+// => [ { name: 'Andi', id: '1' }, { name: 'Budi', id: '2' } ]
+
+objectToArray(byId, 'eid');
+// => [ { name: 'Andi', eid: '1' }, { name: 'Budi', eid: '2' } ]
+```
+
+| Param      | Type                       | Default   | Description                                          |
+| :--------- | :------------------------- | :-------- | :--------------------------------------------------- |
+| objArr     | `Record<string, T>`        | required  | Source object map.                                   |
+| keyObj     | `string`                   | `'id'`    | Property name to assign the object key to per item.  |
+
+### Date Utilities
+
+```javascript
+import { validDate } from '@bank-library/vuejs';
+```
+
+#### `validDate(date)`
+
+Returns `true` if `date` is a parseable date (string, number, or `Date` instance), `false` for
+`null`/`undefined`/`''`/invalid inputs.
+
+```javascript
+validDate('2026-06-25');          // true
+validDate(new Date());            // true
+validDate('not-a-date');          // false
+validDate(null);                  // false
+validDate(undefined);             // false
+validDate('');                    // false
+```
+
+| Param  | Type                  | Default   | Description                |
+| :----- | :-------------------- | :-------- | :------------------------- |
+| date   | `Date \| string \| number \| null \| undefined` | required | Value to validate. |
 
 ## Subpath Imports (Tree-Shaking)
 
