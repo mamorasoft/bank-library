@@ -59,7 +59,7 @@ String _getCurrencySymbol(String currency) {
     'EUR': '€',
     'GBP': '£',
     'JPY': '¥',
-    'IDR': 'Rp',
+    'IDR': 'Rupiah',
     'SGD': 'S\$',
     'MYR': 'RM',
   };
