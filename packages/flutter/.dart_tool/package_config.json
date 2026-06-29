@@ -50,12 +50,6 @@
       "languageVersion": "2.18"
     },
     {
-      "name": "cross_file",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/cross_file-0.3.4+2",
-      "packageUri": "lib/",
-      "languageVersion": "3.3"
-    },
-    {
       "name": "crypto",
       "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/crypto-3.0.7",
       "packageUri": "lib/",
@@ -111,37 +105,7 @@
     },
     {
       "name": "flutter_image_compress",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/flutter_image_compress-2.4.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_image_compress_common",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/flutter_image_compress_common-1.0.6",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_image_compress_macos",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/flutter_image_compress_macos-1.0.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_image_compress_ohos",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/flutter_image_compress_ohos-0.0.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_image_compress_platform_interface",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/flutter_image_compress_platform_interface-1.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_image_compress_web",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/flutter_image_compress_web-0.1.5",
+      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/flutter_image_compress-1.1.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -435,9 +399,9 @@
     },
     {
       "name": "web",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/web-1.1.1",
+      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/web-0.5.1",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.3"
     },
     {
       "name": "xdg_directories",
@@ -458,7 +422,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2026-06-29T02:42:18.404909Z",
+  "generated": "2026-06-29T02:59:46.936014Z",
   "generator": "pub",
   "generatorVersion": "3.5.0",
   "flutterRoot": "file:///Users/muhammadwafi/Developer/flutter",
