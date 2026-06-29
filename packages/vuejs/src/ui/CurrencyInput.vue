@@ -33,7 +33,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props {
+interface CurrencyInputProps {
   modelValue?: number;
   label?: string;
   placeholder?: string;
@@ -50,7 +50,7 @@ interface Props {
   convertedAmountClass?: string | Record<string, boolean> | Array<unknown>;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<CurrencyInputProps>(), {
   modelValue: 0,
   placeholder: '0.00',
   currency: 'USD',

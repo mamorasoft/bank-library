@@ -28,7 +28,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props {
+interface RupiahInputProps {
   modelValue?: number | string;
   label?: string;
   placeholder?: string;
@@ -44,7 +44,7 @@ interface Props {
   errorClass?: string | Record<string, boolean> | Array<unknown>;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<RupiahInputProps>(), {
   modelValue: '',
   placeholder: 'Rp. 0',
   prefix: 'Rp. ',

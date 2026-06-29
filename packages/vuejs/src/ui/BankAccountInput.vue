@@ -35,7 +35,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props {
+interface BankAccountInputProps {
   modelValue?: string;
   label?: string;
   placeholder?: string;
@@ -50,7 +50,7 @@ interface Props {
   validationIconClass?: string | Record<string, boolean> | Array<unknown>;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BankAccountInputProps>(), {
   modelValue: '',
   placeholder: 'Enter account number',
   showValidation: true,
