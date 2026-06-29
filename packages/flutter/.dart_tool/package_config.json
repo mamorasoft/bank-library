@@ -39,7 +39,7 @@
     },
     {
       "name": "connectivity_plus",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/connectivity_plus-7.1.1",
+      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/connectivity_plus-6.1.5",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -458,7 +458,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2026-06-29T02:40:23.869806Z",
+  "generated": "2026-06-29T02:42:18.404909Z",
   "generator": "pub",
   "generatorVersion": "3.5.0",
   "flutterRoot": "file:///Users/muhammadwafi/Developer/flutter",
