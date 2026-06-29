@@ -6,9 +6,9 @@ class ApiUtil {
   static Dio _getDio() {
     Dio dio = Dio();
     // Timeout pakai Integer (Milidetik). 30000 = 30 detik.
-    dio.options.connectTimeout = 30000;
-    dio.options.sendTimeout = 30000;
-    dio.options.receiveTimeout = 30000;
+  dio.options.connectTimeout = const Duration(seconds: 30);
+    dio.options.sendTimeout = const Duration(seconds: 30);
+    dio.options.receiveTimeout = const Duration(seconds: 30);
     return dio;
   }
 

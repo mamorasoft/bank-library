@@ -69,9 +69,15 @@
     },
     {
       "name": "dio",
-      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/dio-4.0.6",
+      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/dio-5.9.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "dio_web_adapter",
+      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/dio_web_adapter-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
     },
     {
       "name": "fake_async",
@@ -246,6 +252,12 @@
       "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/meta-1.15.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "mime",
+      "rootUri": "file:///Users/muhammadwafi/.pub-cache/hosted/pub.dev/mime-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "nm",
@@ -446,7 +458,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2026-06-26T08:26:54.891756Z",
+  "generated": "2026-06-29T02:40:23.869806Z",
   "generator": "pub",
   "generatorVersion": "3.5.0",
   "flutterRoot": "file:///Users/muhammadwafi/Developer/flutter",
