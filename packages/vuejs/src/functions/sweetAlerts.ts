@@ -1,4 +1,15 @@
-import Swal, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2';
+// sweetalert2 import dinamis untuk SSR-safe & tidak menambah ke barrel utama.
+// Tipe didefinisikan lokal agar tidak bergantung pada @types/sweetalert2.
+import Swal from 'sweetalert2';
+
+type SweetAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question';
+
+interface SweetAlertResult {
+  isConfirmed: boolean;
+  isDenied: boolean;
+  isDismissed: boolean;
+  value?: unknown;
+}
 
 /**
  * Checks if the code is running in a browser environment.
@@ -66,7 +77,7 @@ export const messageError = (
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
-    didOpen: (toast) => {
+    didOpen: (toast: HTMLElement) => {
       toast.onmouseenter = Swal.stopTimer;
       toast.onmouseleave = Swal.resumeTimer;
     }

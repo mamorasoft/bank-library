@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { parseRupiah, FormatOptions } from '../functions/rupiahFormatter';
+import { parseRupiah, type FormatOptions } from '../functions/rupiahFormatter';
 import { vRupiah } from '../functions/rupiahDirective';
 
 defineOptions({
