@@ -1,5 +1,5 @@
-import { ObjectDirective } from 'vue';
-import { formatRupiah, parseRupiah, FormatOptions } from './rupiahFormatter';
+import type { ObjectDirective } from 'vue';
+import { formatRupiah, parseRupiah, type FormatOptions } from './rupiahFormatter';
 
 // Extend HTMLInputElement to store our custom listeners and options
 interface RupiahInputElement extends HTMLInputElement {

@@ -2,9 +2,9 @@ import type { App } from 'vue';
 import * as components from './ui';
 import * as functions from './functions';
 import { vRupiah } from './functions/rupiahDirective';
-import { formatRupiah, parseRupiah, FormatOptions } from './functions/rupiahFormatter';
+import { formatRupiah, parseRupiah, type FormatOptions } from './functions/rupiahFormatter';
 import { IndonesianDate } from './functions/indonesianDate';
-import { responsiveColsTailwind, getDefaultCol, _setGlobalGridOptions, GridColOptions } from './functions/gridColumns';
+import { responsiveColsTailwind, getDefaultCol, _setGlobalGridOptions, type GridColOptions } from './functions/gridColumns';
 
 export * from './ui';
 export * from './functions';

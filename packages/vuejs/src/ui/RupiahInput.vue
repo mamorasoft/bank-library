@@ -21,14 +21,14 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { parseRupiah, FormatOptions } from '../functions/rupiahFormatter';
+import { parseRupiah, type FormatOptions } from '../functions/rupiahFormatter';
 import { vRupiah } from '../functions/rupiahDirective';
 
 defineOptions({
   inheritAttrs: false,
 });
 
-interface Props {
+interface RupiahInputProps {
   modelValue?: number | string;
   label?: string;
   placeholder?: string;
@@ -44,7 +44,7 @@ interface Props {
   errorClass?: string | Record<string, boolean> | Array<unknown>;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<RupiahInputProps>(), {
   modelValue: '',
   placeholder: 'Rp. 0',
   prefix: 'Rp. ',

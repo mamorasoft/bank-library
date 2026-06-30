@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue';
-import { formatRupiah, parseRupiah, FormatOptions } from './rupiahFormatter';
+import { formatRupiah, parseRupiah, type FormatOptions } from './rupiahFormatter';
 
 /**
  * A Vue 3 composable that manages a reactive number and its formatted Rupiah string representation.
