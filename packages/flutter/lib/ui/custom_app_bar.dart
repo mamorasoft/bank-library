@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PremiumAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String? subtitle;
   final bool centerTitle;
@@ -21,7 +21,7 @@ class PremiumAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double elevation;
   final bool showBottomBorder;
 
-  const PremiumAppBar({
+  const CustomAppBar({
     Key? key,
     required this.title,
     this.subtitle,
